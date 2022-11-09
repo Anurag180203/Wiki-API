@@ -23,6 +23,8 @@ const articleSchema = new mongoose.Schema({
 
 const Article = mongoose.model("Article", articleSchema);
 
+//request targeting all articles
+
 app.route("/articles")
     .get(function(req, res) {
         Article.find({}, function(err, foundArticles) {
@@ -56,6 +58,22 @@ app.route("/articles")
             }
         });
     });
+
+//request targeting specific article
+
+app.route("/articles/:articleTitle")
+    .get(function(req, res) {
+        Article.findOne({
+            title: req.params.articleTitle
+        }, function(err, foundArticle) {
+            if (err) {
+                res.send(err);
+            } else {
+                res.send(foundArticle);
+            }
+        });
+    });
+
 
 
 
